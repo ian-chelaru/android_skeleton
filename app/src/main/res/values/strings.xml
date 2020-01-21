@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Exam App</string>
+    <string name="client_section">Client Section</string>
+    <string name="admin_section">Admin Section</string>
+    <string name="name">Name:</string>
+    <string name="quantity">Quantity:</string>
+    <string name="price">Price:</string>
+</resources>
