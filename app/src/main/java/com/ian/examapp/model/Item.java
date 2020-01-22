@@ -2,7 +2,9 @@ package com.ian.examapp.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Item
+import java.io.Serializable;
+
+public class Item implements Serializable
 {
     @SerializedName("id")
     private Integer id;
@@ -14,7 +16,7 @@ public class Item
     private String description;
 
     @SerializedName("quantity")
-    private String quantity;
+    private Integer quantity;
 
     @SerializedName("price")
     private Integer price;
@@ -52,12 +54,12 @@ public class Item
         this.description = description;
     }
 
-    public String getQuantity()
+    public Integer getQuantity()
     {
         return quantity;
     }
 
-    public void setQuantity(String quantity)
+    public void setQuantity(Integer quantity)
     {
         this.quantity = quantity;
     }
@@ -81,4 +83,5 @@ public class Item
     {
         this.status = status;
     }
+
 }
