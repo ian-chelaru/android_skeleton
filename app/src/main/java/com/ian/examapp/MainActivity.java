@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.ian.examapp.activities.AdminActivity;
 import com.ian.examapp.activities.ClientActivity;
+import com.ian.examapp.activities.TypeActivity;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity
 
     public void navigateToClientSection(View view)
     {
-        Intent intent = new Intent(this, ClientActivity.class);
+        Intent intent = new Intent(this, TypeActivity.class);
         startActivity(intent);
     }
 

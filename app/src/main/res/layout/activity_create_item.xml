@@ -22,25 +22,11 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:labelFor="@id/description_edit_text"
-        android:text="@string/description" />
+        android:labelFor="@id/specs_edit_text"
+        android:text="@string/specs" />
 
     <EditText
-        android:id="@+id/description_edit_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:importantForAutofill="no"
-        android:inputType="textMultiLine"
-        android:lines="5" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:labelFor="@id/quantity_edit_text"
-        android:text="@string/quantity" />
-
-    <EditText
-        android:id="@+id/quantity_edit_text"
+        android:id="@+id/specs_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:importantForAutofill="no"
@@ -49,15 +35,28 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:labelFor="@id/price_edit_text"
-        android:text="@string/price" />
+        android:labelFor="@id/height_edit_text"
+        android:text="@string/height" />
 
     <EditText
-        android:id="@+id/price_edit_text"
+        android:id="@+id/height_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:importantForAutofill="no"
-        android:inputType="text" />
+        android:inputType="numberSigned" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:labelFor="@id/age_edit_text"
+        android:text="@string/age" />
+
+    <EditText
+        android:id="@+id/age_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:importantForAutofill="no"
+        android:inputType="numberSigned" />
 
     <LinearLayout
         android:layout_width="match_parent"

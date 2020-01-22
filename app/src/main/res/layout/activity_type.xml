@@ -4,20 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activities.ClientActivity">
-
-    <Button
-        android:id="@+id/create_item"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|end"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="10dp"
-        android:onClick="createItem"
-        android:text="@string/create_item"/>
+    tools:context=".activities.TypeActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/items_recycler_view"
+        android:id="@+id/types_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp" />

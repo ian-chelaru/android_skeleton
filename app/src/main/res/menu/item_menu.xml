@@ -2,7 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/delete_item"
-        android:title="@string/delete_item" />
+        android:id="@+id/update_age"
+        android:title="@string/update_age" />
+
+    <item
+        android:id="@+id/update_height"
+        android:title="@string/update_height" />
 
 </menu>

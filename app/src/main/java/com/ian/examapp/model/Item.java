@@ -12,17 +12,17 @@ public class Item implements Serializable
     @SerializedName("name")
     private String name;
 
-    @SerializedName("description")
-    private String description;
+    @SerializedName("specs")
+    private String specs;
 
-    @SerializedName("quantity")
-    private Integer quantity;
+    @SerializedName("height")
+    private Integer height;
 
-    @SerializedName("price")
-    private Integer price;
+    @SerializedName("type")
+    private String type;
 
-    @SerializedName("status")
-    private String status;
+    @SerializedName("age")
+    private Integer age;
 
     public Integer getId()
     {
@@ -44,44 +44,43 @@ public class Item implements Serializable
         this.name = name;
     }
 
-    public String getDescription()
+    public String getSpecs()
     {
-        return description;
+        return specs;
     }
 
-    public void setDescription(String description)
+    public void setSpecs(String specs)
     {
-        this.description = description;
+        this.specs = specs;
     }
 
-    public Integer getQuantity()
+    public Integer getHeight()
     {
-        return quantity;
+        return height;
     }
 
-    public void setQuantity(Integer quantity)
+    public void setHeight(Integer height)
     {
-        this.quantity = quantity;
+        this.height = height;
     }
 
-    public Integer getPrice()
+    public String getType()
     {
-        return price;
+        return type;
     }
 
-    public void setPrice(Integer price)
+    public void setType(String type)
     {
-        this.price = price;
+        this.type = type;
     }
 
-    public String getStatus()
+    public Integer getAge()
     {
-        return status;
+        return age;
     }
 
-    public void setStatus(String status)
+    public void setAge(Integer age)
     {
-        this.status = status;
+        this.age = age;
     }
-
 }

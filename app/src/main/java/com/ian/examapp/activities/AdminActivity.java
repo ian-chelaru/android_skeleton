@@ -11,8 +11,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.ian.examapp.R;
@@ -25,6 +27,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import cc.cloudist.acplibrary.ACProgressConstant;
 import cc.cloudist.acplibrary.ACProgressFlower;
@@ -43,6 +46,7 @@ public class AdminActivity extends AppCompatActivity
     private ItemService itemService;
     private AdminItemListAdapter itemListAdapter;
     private ACProgressFlower progressIndicator;
+    private AlertDialog ageDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -60,7 +64,7 @@ public class AdminActivity extends AppCompatActivity
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
         // TODO change here the port
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://10.0.2.2:2024/")
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://10.0.2.2:2202/")
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -78,34 +82,20 @@ public class AdminActivity extends AppCompatActivity
         Item itemSelected = itemListAdapter.getItemByPosition(item.getGroupId());
         switch (item.getItemId())
         {
-            case R.id.delete_item:
-                deleteServerItem(itemSelected);
+            case R.id.update_age:
+//                updateAge(itemSelected);
+                showAgeDialog(itemSelected);
                 break;
         }
 
         return super.onContextItemSelected(item);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
-    {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CREATE_ITEM_REQUEST)
-        {
-            if (resultCode == Activity.RESULT_OK)
-            {
-                assert data != null;
-                Item newItem = (Item) data.getSerializableExtra("new_item");
-                insertServerItem(newItem);
-            }
-        }
-    }
-
-    private void insertServerItem(Item newItem)
+    private void updateAge(Item item)
     {
         progressIndicator.show();
 
-        itemService.insertItem(newItem).enqueue(new Callback<Item>()
+        itemService.updateAge(item).enqueue(new Callback<Item>()
         {
             @Override
             public void onResponse(@NotNull Call<Item> call, @NotNull Response<Item> response)
@@ -113,9 +103,10 @@ public class AdminActivity extends AppCompatActivity
                 progressIndicator.dismiss();
                 if (response.isSuccessful())
                 {
-                    Item item = response.body();
-                    assert item != null;
-                    itemListAdapter.insertItem(item);
+                    Item upItem = response.body();
+                    assert upItem != null;
+                    item.setAge(upItem.getAge());
+                    itemListAdapter.notifyDataSetChanged();
                 }
                 else
                 {
@@ -130,7 +121,7 @@ public class AdminActivity extends AppCompatActivity
             public void onFailure(@NotNull Call<Item> call, @NotNull Throwable t)
             {
                 progressIndicator.dismiss();
-                displayToastMessage("Network error. Products can not be loaded");
+                displayToastMessage("Network error. Robot can not be updates");
             }
         });
     }
@@ -149,7 +140,10 @@ public class AdminActivity extends AppCompatActivity
                 {
                     List<Item> items = response.body();
                     assert items != null;
-                    items.sort(Comparator.comparing(Item::getQuantity));
+                    items = items.stream()
+                            .sorted(Comparator.comparing(Item::getAge).reversed())
+                            .limit(10)
+                            .collect(Collectors.toList());
                     itemListAdapter.setItems(items);
                 }
                 else
@@ -165,42 +159,10 @@ public class AdminActivity extends AppCompatActivity
             public void onFailure(@NonNull Call<List<Item>> call, @NonNull Throwable t)
             {
                 progressIndicator.dismiss();
-                displayToastMessage("Network error. Products can not be loaded");
+                displayToastMessage("Network error. Robots can not be loaded");
             }
         });
 
-    }
-
-    private void deleteServerItem(Item item)
-    {
-        progressIndicator.show();
-
-        itemService.deleteItem(item.getId()).enqueue(new Callback<Item>()
-        {
-            @Override
-            public void onResponse(@NotNull Call<Item> call, @NotNull Response<Item> response)
-            {
-                if (response.isSuccessful())
-                {
-                    progressIndicator.dismiss();
-                    itemListAdapter.deleteItem(item);
-                }
-                else
-                {
-                    int errorStatusCode = response.code();
-                    assert response.body() != null;
-                    String errorMessage = response.body().toString();
-                    displayToastMessage(errorStatusCode + " " + errorMessage);
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call<Item> call, @NotNull Throwable t)
-            {
-                progressIndicator.dismiss();
-                displayToastMessage("No internet connection. Delete operation not available.");
-            }
-        });
     }
 
     private void displayToastMessage(String message)
@@ -217,10 +179,23 @@ public class AdminActivity extends AppCompatActivity
                 .fadeColor(Color.DKGRAY).build();
     }
 
-    public void createItem(View view)
+    private void showAgeDialog(Item item)
     {
-        Intent intent = new Intent(this, CreateItemActivity.class);
-        startActivityForResult(intent, CREATE_ITEM_REQUEST);
+        AlertDialog.Builder retryDialog = new AlertDialog.Builder(this);
+
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        retryDialog.setView(input);
+
+        retryDialog.setMessage("Give the age")
+                .setPositiveButton("OK", ((dialog, which) -> {
+                    dialog.cancel();
+                    item.setAge(Integer.valueOf(input.getText().toString()));
+                    updateAge(item);
+                }))
+                .create();
+
+        retryDialog.show();
     }
 
 }

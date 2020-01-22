@@ -54,4 +54,15 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemViewHolder>
         this.items = items;
         notifyDataSetChanged();
     }
+
+    public void insertItem(Item item)
+    {
+        items.add(item);
+        notifyDataSetChanged();
+    }
+
+    public Item getItemByPosition(int position)
+    {
+        return items.get(position);
+    }
 }

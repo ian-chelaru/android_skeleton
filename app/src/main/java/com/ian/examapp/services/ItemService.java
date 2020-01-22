@@ -15,19 +15,39 @@ import retrofit2.http.Path;
 
 public interface ItemService
 {
-    @GET("products")
+    @GET("robots/{type}")
     @Headers("Content-Type: application/json")
-    Call<List<Item>> getAvailableItems();
+    Call<List<Item>> getRobotsByType(@Path("type") String type);
 
-    @GET("all")
-    @Headers("Content-Type: application/json")
-    Call<List<Item>> getAllItems();
-
-    @POST("product")
+    @POST("robot")
     @Headers("Content-Type: application/json")
     Call<Item> insertItem(@Body Item item);
 
-    @DELETE("product/{id}")
+    @GET("old")
     @Headers("Content-Type: application/json")
-    Call<Item> deleteItem(@Path("id") int id);
+    Call<List<Item>> getAllItems();
+
+    @POST("age")
+    @Headers("Content-Type: application/json")
+    Call<Item> updateAge(@Body Item item);
+
+    @POST("height")
+    @Headers("Content-Type: application/json")
+    Call<Item> updateHeight(@Body Item item);
+
+//    @GET("products")
+//    @Headers("Content-Type: application/json")
+//    Call<List<Item>> getAvailableItems();
+//
+//    @GET("all")
+//    @Headers("Content-Type: application/json")
+//    Call<List<Item>> getAllItems();
+//
+//    @POST("product")
+//    @Headers("Content-Type: application/json")
+//    Call<Item> insertItem(@Body Item item);
+//
+//    @DELETE("product/{id}")
+//    @Headers("Content-Type: application/json")
+//    Call<Item> deleteItem(@Path("id") int id);
 }

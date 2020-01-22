@@ -14,9 +14,9 @@ import com.ian.examapp.model.Item;
 public class CreateItemActivity extends AppCompatActivity
 {
     private EditText nameEditText;
-    private EditText descriptionEditText;
-    private EditText quantityEditText;
-    private EditText priceEditText;
+    private EditText specsEditText;
+    private EditText heightEditText;
+    private EditText ageEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -25,23 +25,23 @@ public class CreateItemActivity extends AppCompatActivity
         setContentView(R.layout.activity_create_item);
 
         nameEditText = findViewById(R.id.name_edit_text);
-        descriptionEditText = findViewById(R.id.description_edit_text);
-        quantityEditText = findViewById(R.id.quantity_edit_text);
-        priceEditText = findViewById(R.id.price_edit_text);
+        specsEditText = findViewById(R.id.specs_edit_text);
+        heightEditText = findViewById(R.id.height_edit_text);
+        ageEditText = findViewById(R.id.age_edit_text);
     }
 
     public void saveAction(View view)
     {
         String itemName = nameEditText.getText().toString();
-        String itemDescription = descriptionEditText.getText().toString();
-        Integer itemQuantity = Integer.valueOf(quantityEditText.getText().toString());
-        Integer itemPrice = Integer.valueOf(priceEditText.getText().toString());
+        String itemSpecs = specsEditText.getText().toString();
+        Integer itemHeight = Integer.valueOf(heightEditText.getText().toString());
+        Integer itemAge = Integer.valueOf(ageEditText.getText().toString());
 
         Item item = new Item();
         item.setName(itemName);
-        item.setDescription(itemDescription);
-        item.setQuantity(itemQuantity);
-        item.setPrice(itemPrice);
+        item.setSpecs(itemSpecs);
+        item.setHeight(itemHeight);
+        item.setAge(itemAge);
 
         Intent resultIntent = new Intent();
         resultIntent.putExtra("new_item", item);
